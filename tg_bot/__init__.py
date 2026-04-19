@@ -2,6 +2,17 @@ import logging
 import os
 import sys
 
+# Patch for Python 3.13+ where imghdr was removed
+try:
+    import imghdr
+except ImportError:
+    import types
+    imghdr = types.ModuleType("imghdr")
+    def what(file, h=None):
+        return None
+    imghdr.what = what
+    sys.modules["imghdr"] = imghdr
+
 import telegram.ext as tg
 
 # enable logging
@@ -44,7 +55,7 @@ if ENV:
         raise Exception("Your whitelisted users list does not contain valid integers.")
 
     WEBHOOK = bool(os.environ.get('WEBHOOK', False))
-    URL = os.environ.get('URL', "")  # Does not contain token
+    URL = os.environ.get('URL', "")
     PORT = int(os.environ.get('PORT', 5000))
     CERT_PATH = os.environ.get("CERT_PATH")
 
@@ -60,7 +71,7 @@ if ENV:
 
     try:
         BMERNU_SCUT_SRELFTI = int(os.environ.get('BMERNU_SCUT_SRELFTI', None))
-    except ValueError:
+    except (ValueError, TypeError):
         BMERNU_SCUT_SRELFTI = None
 
 else:
@@ -106,7 +117,7 @@ else:
 
     try:
         BMERNU_SCUT_SRELFTI = int(Config.BMERNU_SCUT_SRELFTI)
-    except ValueError:
+    except (ValueError, TypeError):
         BMERNU_SCUT_SRELFTI = None
 
 
