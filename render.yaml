@@ -4,17 +4,18 @@ services:
     env: python
     region: oregon
     plan: free
+    pythonVersion: "3.10.13"
     buildCommand: pip install -r requirements.txt
     startCommand: python3 -m tg_bot
     envVars:
       - key: ENV
         value: "True"
       - key: TOKEN
-        sync: false          # Set manually in Render dashboard
+        sync: false
       - key: OWNER_ID
-        sync: false          # Your Telegram user ID (integer)
+        sync: false
       - key: OWNER_USERNAME
-        sync: false          # Your Telegram username (without @)
+        sync: false
       - key: DATABASE_URL
         fromDatabase:
           name: rose-db
@@ -22,7 +23,7 @@ services:
       - key: WEBHOOK
         value: "True"
       - key: URL
-        sync: false          # Your Render service URL e.g. https://rose-telegram-bot.onrender.com
+        sync: false
       - key: PORT
         value: "10000"
       - key: NO_LOAD
@@ -33,6 +34,8 @@ services:
         value: "False"
       - key: STRICT_GBAN
         value: "False"
+      - key: PYTHON_VERSION
+        value: "3.10.13"
 
 databases:
   - name: rose-db
