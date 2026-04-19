@@ -4,10 +4,11 @@ services:
     env: python
     region: oregon
     plan: free
-    pythonVersion: "3.10.13"
     buildCommand: pip install -r requirements.txt
     startCommand: python3 -m tg_bot
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.10.13"
       - key: ENV
         value: "True"
       - key: TOKEN
@@ -34,8 +35,6 @@ services:
         value: "False"
       - key: STRICT_GBAN
         value: "False"
-      - key: PYTHON_VERSION
-        value: "3.10.13"
 
 databases:
   - name: rose-db
